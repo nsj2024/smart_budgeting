@@ -1,7 +1,10 @@
 package com.ust.user.model;
 
 
+
+
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "users")

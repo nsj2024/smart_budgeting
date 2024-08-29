@@ -56,29 +56,30 @@ public class ExpenseService {
     }
 
     public Map<String, String> getRemainingBudgetAndPercentage() {
-        List<String> categories = List.of("Groceries", "Transportation", "Entertainment"); // Example categories
-        Map<String, String> result = new HashMap<>();
-        double totalRemainingBudget = 0;
-
-        for (String category : categories) {
-            Budget budgets = restTemplate.getForObject(BUDGET_SERVICE_URL + category, Budget.class);
-            if (budgets != null) {
-                double totalBudget = 0;
-                for (Budget budget : budgets) {
-                    totalBudget += budget.getAmount();
-                }
-                double totalSpent = getTotalExpensesByCategory(category);
-                double remainingBudget = totalBudget - totalSpent;
-                double percentageSpent = (totalSpent / totalBudget) * 100;
-
-                result.put(category + "_remaining_budget", remainingBudget + "");
-                result.put(category + "_percentage_spent", percentageSpent + "");
-                totalRemainingBudget += remainingBudget;
-            }
-        }
-
-        result.put("total_remaining_budget", totalRemainingBudget+ "");
-        return result;
+//        List<String> categories = List.of("Groceries", "Transportation", "Entertainment"); // Example categories
+//        Map<String, String> result = new HashMap<>();
+//        double totalRemainingBudget = 0;
+//
+//        for (String category : categories) {
+//            Budget budgets = restTemplate.getForObject(BUDGET_SERVICE_URL + category, Budget.class);
+//            if (budgets != null) {
+//                double totalBudget = 0;
+//                for (Budget budget : budgets) {
+//                    totalBudget += budget.getAmount();
+//                }
+//                double totalSpent = getTotalExpensesByCategory(category);
+//                double remainingBudget = totalBudget - totalSpent;
+//                double percentageSpent = (totalSpent / totalBudget) * 100;
+//
+//                result.put(category + "_remaining_budget", remainingBudget + "");
+//                result.put(category + "_percentage_spent", percentageSpent + "");
+//                totalRemainingBudget += remainingBudget;
+//            }
+//        }
+//
+//        result.put("total_remaining_budget", totalRemainingBudget+ "");
+//        return result;
+        return null;
     }
 
     private double getTotalExpensesByCategory(String category) {
