@@ -1,7 +1,7 @@
 package com.ust.budget.service;
 
 
-import com.ust.budget.entity.Budget;
+import com.ust.budget.model.Budget;
 import com.ust.budget.repository.BudgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

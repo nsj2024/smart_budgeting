@@ -1,4 +1,4 @@
-package com.ust.expense.model;
+package com.ust.expense.controller;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

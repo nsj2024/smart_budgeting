@@ -1,7 +1,7 @@
 package com.ust.budget.controller;
 
 
-import com.ust.budget.entity.Budget;
+import com.ust.budget.model.Budget;
 import com.ust.budget.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
