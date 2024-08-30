@@ -1,0 +1,62 @@
+spring:
+
+  application:
+
+    name: JWTDEMO
+
+
+
+  datasource:
+
+    url: jdbc:mysql://localhost:3306/budgetplanner
+
+    username: root
+
+    password: pass1234
+
+
+
+  jpa:
+
+    hibernate:
+
+      ddl-auto: create
+
+    show-sql: true
+
+
+
+  cloud:
+
+    gateway:
+
+      mvc:
+
+        routes:
+
+          - id: lbservice-route
+
+            uri: lb://BUDGET
+
+            predicates:
+
+              - Path=/budgets/**
+
+
+
+          - id: lbservice2-route
+
+            uri: lb://EXPENSE
+
+            predicates:
+
+              - Path=/expenses/**
+
+
+server:
+  port: 8888
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
