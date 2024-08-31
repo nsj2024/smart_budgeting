@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "budget-service", url = "http://localhost:8888")  // Replace with your actual service name and URL
+@FeignClient(name = "budget-service", url = "http://localhost:9999")  // Replace with your actual service name and URL
 public interface BudgetClient {
 
-    @GetMapping("/budgets/category/{category}")
-    Budget getBudgetByCategory(@PathVariable("category") String category);
+    @GetMapping("/budgets/email/{email}")
+    List<Budget> getBudgetByEmail(@PathVariable("email") String email);
 
 
 }

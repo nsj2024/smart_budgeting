@@ -16,7 +16,10 @@ public class BudgetService {
         @Autowired
         private BudgetRepository budgetRepository;
 
-
+        public  List<Budget> getBudgetByEmail(String email)
+        {
+            return budgetRepository.findAllByEmail(email);
+        }
         // Create new Budget
         public Budget createBudget(Budget budget) {
             return budgetRepository.save(budget);
@@ -70,63 +73,5 @@ public class BudgetService {
             }
         }
 }
-
-
-
-//-----------------------------------------------------------------------------
-//package com.example.budgetservice.service;
-//
-//import com.example.budgetservice.model.Budget;
-//import com.example.budgetservice.repository.BudgetRepository;
-//import com.example.budgetservice.util.JwtUtil;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//
-//@Service
-//public class BudgetService {
-//
-//    @Autowired
-//    private BudgetRepository budgetRepository;
-//
-//    @Autowired
-//    private JwtUtil jwtUtil;
-//
-//    public Budget createBudget(Budget budget) {
-//        String userId = jwtUtil.extractUserId();
-//        budget.setUserId(userId);
-//        return budgetRepository.save(budget);
-//    }
-//
-//    public Budget updateBudget(Long id, Budget updatedBudget) {
-//        String userId = jwtUtil.extractUserId();
-//        if (budgetRepository.existsById(id)) {
-//            updatedBudget.setId(id);
-//            updatedBudget.setUserId(userId);
-//            return budgetRepository.save(updatedBudget);
-//        }
-//        return null; // Handle this case as appropriate
-//    }
-//
-//    public List<Budget> getBudgetsByUserId() {
-//        String userId = jwtUtil.extractUserId();
-//        return budgetRepository.findByUserId(userId);
-//    }
-//
-//    public List<Budget> getBudgetsByCategoryAndUserId(String category) {
-//        String userId = jwtUtil.extractUserId();
-//        return budgetRepository.findByCategoryAndUserId(category, userId);
-//    }
-//
-//    public void deleteBudget(Long id) {
-//        budgetRepository.deleteById(id);
-//    }
-//
-//    // Admin-specific methods
-//    public List<Budget> getAllBudgets() {
-//        return budgetRepository.findAll();
-//    }
-//}
 
 

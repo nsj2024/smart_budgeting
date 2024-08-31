@@ -34,9 +34,9 @@ public class ExpenseController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/total")
-    public ResponseEntity<Double> getTotalExpenses() {
-        double total = expenseService.getTotalExpenses();
+    @GetMapping("/total/{email}")
+    public ResponseEntity<Double> getTotalExpenses(@PathVariable String email) {
+        double total = expenseService.getTotalExpenses(email);
         return new ResponseEntity<>(total, HttpStatus.OK);
     }
 
@@ -64,9 +64,9 @@ public class ExpenseController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping( "/budgetsummary")
-    public ResponseEntity<Map<String, String>> getBudgetSummary() {
-        Map<String, String> budgetSummary = expenseService.getRemainingBudgetAndPercentage();
+    @GetMapping( "/budgetsummary/{email}")
+    public ResponseEntity<Map<String, String>> getBudgetSummary(@PathVariable String email) {
+        Map<String, String> budgetSummary = expenseService.getRemainingBudgetAndPercentage(email);
         return new ResponseEntity<Map<String,String>>(budgetSummary, HttpStatus.OK);
     }
 }

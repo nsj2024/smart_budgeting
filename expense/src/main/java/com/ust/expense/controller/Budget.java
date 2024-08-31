@@ -22,7 +22,7 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;  // Foreign key to associate with a user
+    private String email;  // Foreign key to associate with a user
     private String category;
     private double amount;
     private LocalDate startDate;

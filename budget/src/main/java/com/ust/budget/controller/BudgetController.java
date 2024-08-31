@@ -40,6 +40,11 @@ public class BudgetController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<List<Budget>> getBudgetByEmail(@PathVariable String email) {
+        List<Budget> budget = budgetService.getBudgetByEmail(email);
+        return new ResponseEntity<>(budget, HttpStatus.OK);
+    }
     // Get a Budget by Category (within valid date range)
     @GetMapping("/category/{category}")
     public ResponseEntity<Budget> getBudgetByCategory(@PathVariable String category) {
@@ -55,6 +60,7 @@ public class BudgetController {
         return budget.map(b -> new ResponseEntity<>(b, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
 
     // Delete a Budget
     @DeleteMapping("/{id}")
@@ -82,65 +88,4 @@ public class BudgetController {
 
 
 
-
-
-//----------------------------------------------------------------------------------------
-//package com.example.budgetservice.controller;
-//
-//import com.example.budgetservice.model.Budget;
-//import com.example.budgetservice.service.BudgetService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//        import java.util.List;
-//
-//@RestController
-//@RequestMapping("/budgets")
-//public class BudgetController {
-//
-//    @Autowired
-//    private BudgetService budgetService;
-//
-//    @PostMapping("/create")
-//    public ResponseEntity<Budget> createBudget(@RequestBody Budget budget) {
-//        Budget createdBudget = budgetService.createBudget(budget);
-//        return new ResponseEntity<>(createdBudget, HttpStatus.CREATED);
-//    }
-//
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<Budget> updateBudget(@PathVariable Long id, @RequestBody Budget updatedBudget) {
-//        Budget budget = budgetService.updateBudget(id, updatedBudget);
-//        if (budget != null) {
-//            return new ResponseEntity<>(budget, HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-//
-//    @GetMapping("/user")
-//    public ResponseEntity<List<Budget>> getBudgetsByUserId() {
-//        List<Budget> budgets = budgetService.getBudgetsByUserId();
-//        return new ResponseEntity<>(budgets, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/category/{category}")
-//    public ResponseEntity<List<Budget>> getBudgetsByCategoryAndUserId(@PathVariable String category) {
-//        List<Budget> budgets = budgetService.getBudgetsByCategoryAndUserId(category);
-//        return new ResponseEntity<>(budgets, HttpStatus.OK);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteBudget(@PathVariable Long id) {
-//        budgetService.deleteBudget(id);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
-//
-//    // Admin-specific endpoints
-//    @GetMapping("/admin/all")
-//    public ResponseEntity<List<Budget>> getAllBudgets() {
-//        List<Budget> budgets = budgetService.getAllBudgets();
-//        return new ResponseEntity<>(budgets, HttpStatus.OK);
-//    }
-//}
 

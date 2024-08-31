@@ -35,12 +35,20 @@ public class ExpenseService {
         return null; // Handle this case as appropriate
     }
 
+
+    public List<Expense> getBudgetByEmail(String email)
+    {
+        return expenseRepository.findAllByEmail(email);
+    }
+
+
+
     public List<Expense> getAllExpenses() {
         return expenseRepository.findAll();
     }
 
-    public double getTotalExpenses() {
-        return expenseRepository.findAll().stream().mapToDouble(Expense::getAmount).sum();
+    public double getTotalExpenses(String email) {
+        return expenseRepository.findAllByEmail(email).stream().mapToDouble(Expense::getAmount).sum();
     }
 
     public List<Expense> getExpensesByCategory(String category) {
@@ -55,23 +63,29 @@ public class ExpenseService {
         expenseRepository.deleteById(id);
     }
 
-    public Map<String, String> getRemainingBudgetAndPercentage() {
-        List<String> categories = List.of("Groceries", "Transportation", "Entertainment");  // Example categories
+    public Map<String, String> getRemainingBudgetAndPercentage(String email) {
+        List<Budget> budgets = budgetClient.getBudgetByEmail(email);
+        String category;
         Map<String, String> result = new HashMap<>();
         double totalRemainingBudget = 0;
 
-        for (String category : categories) {
-            Budget budget = budgetClient.getBudgetByCategory(category);
-            if (budget != null) {
-                double totalBudget = budget.getAmount();
-                double totalSpent = getTotalExpensesByCategory(category);
-                double remainingBudget = totalBudget - totalSpent;
-                double percentageSpent = (totalSpent / totalBudget) * 100;
+        for (Budget budget : budgets) {
+            category = budget.getCategory();
+            double totalBudget = budget.getAmount();
+            double totalSpent = getTotalExpensesByCategory(email,category);
+            double remainingBudget = totalBudget - totalSpent;
+            double percentageSpent = (totalSpent / totalBudget) * 100;
+
+//            if (budgets != null) {
+
+//                if(result.containsKey(category + "_remaining_budget")){
+//                    result.put(category + "_remaining_budget",result.get(category + "_remaining_budget")+budget.getAmount());
+//                }
 
                 result.put(category + "_remaining_budget", String.valueOf(remainingBudget));
                 result.put(category + "_percentage_spent", String.valueOf(percentageSpent));
                 totalRemainingBudget += remainingBudget;
-            }
+//            }
         }
 
         result.put("total_remaining_budget", String.valueOf(totalRemainingBudget));
@@ -79,8 +93,11 @@ public class ExpenseService {
     }
 
 
-    private double getTotalExpensesByCategory(String category) {
-        return expenseRepository.findByCategory(category).stream().mapToDouble(Expense::getAmount).sum();
+    private double getTotalExpensesByCategory(String email, String category) {
+        return expenseRepository.findAllByEmail(email).stream()
+                .filter(expense -> expense.getCategory().equals(category))
+                .mapToDouble(Expense::getAmount)
+                .sum();
     }
 }
 
